@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Melek Memiş — Aerospace & Embedded Systems</title>
+  <title>Melek Memiş — Robotics & Embedded Systems</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -24,7 +24,7 @@
     <div class="container">
       <div class="hero-inner">
         <div>
-          <div class="hero-tag">Aerospace & Embedded Systems Engineer</div>
+          <div class="hero-tag">Robotics & Embedded Systems Engineer</div>
           <div class="btn-row">
             <img src="profile.png" width="100" height="133" class="hero-img-radius";>
             <h1>Melek<br><span>Memiş</span></h1>
@@ -79,9 +79,17 @@
       </div>
       <div class="about-grid">
         <div class="about-text fade-in">
-          <p>Drone sistemleri ve gömülü yazılım üzerine çalışan bir mühendisim. <strong>FCU+PDB kartlarını</strong> sıfırdan tasarlayıp geliştirdim.</p>
-          <p>Şu an <strong>CubeSat projesi</strong> kapsamında kart-yer istasyonu haberleşmesine ve CAM (Communications & ADCS Module) entegrasyonuna odaklanıyorum. Ayrıca kaynakları kısıtlı MCU'lar için gerçek zamanlı bir otopilot yazılımı geliştiriyorum.</p>
-          <p>Bursa'da yaşıyorum. Düzce Üniversitesi Mekatronik Mühendisliği 4. sınıf öğrencisiyim.</p>
+          <p>
+          Mekatronik mühendisliği öğrencisi olarak gömülü sistemler, aviyonik yazılımlar ve otonom robotik platformlar üzerine çalışıyorum. Odak noktam; gerçek zamanlı çalışan, sensör verisi işleyen ve sahada kullanılabilir sistemler geliştirmek.
+          </p>
+
+          <p>
+          Gömülü sistem tarafında kendi FCU + PDB kart tasarımımı geliştirerek PCB tasarımından firmware seviyesine kadar uçtan uca bir aviyonik mimari oluşturdum. Bunun yanında STM32 tabanlı gerçek zamanlı otopilot yazılımı üzerinde çalışıyor; sensör füzyonu, PID kontrol ve EKF tabanlı sistemler geliştiriyorum.
+          </p>
+
+          <p>
+          Otonom sistemler tarafında lidar tabanlı haritalama yapan rover, robotik kol entegrasyonu ve SLAM tabanlı navigasyon sistemleri üzerinde çalıştım. Ayrıca CubeSat projesi kapsamında ADCS, yer istasyonu haberleşmesi ve kartlar arası iletişim (CAN/UART/RF) sistemleri geliştiriyorum.
+          </p>
         </div>
         <div class="fade-in">
           <div class="skills-label">Teknik Beceriler</div>
@@ -127,13 +135,12 @@
 
             <p class="project-desc">
               Kendi tasarımım olan uçuş kontrol birimi ve güç dağıtım kartı.
-              Tüm donanım ve yazılım sıfırdan geliştirildi.
+              Tüm donanım sıfırdan geliştirildi.
             </p>
 
             <div class="project-tags">
               <span class="tag">Altium Designer</span>
               <span class="tag">STM32</span>
-              <span class="tag">C++</span>
               <span class="tag">PCB Design</span>
             </div>
 
@@ -161,7 +168,7 @@
             </p>
 
             <div class="project-tags">
-              <span class="tag">C++</span>
+              <span class="tag">C</span>
               <span class="tag">FreeRTOS</span>
               <span class="tag">MAVLink</span>
               <span class="tag">EKF</span>
@@ -184,19 +191,18 @@
               <span class="project-status status-dev">Geliştiriliyor</span>
             </div>
 
-            <div class="project-title">CubeSat — CAM Haberleşme</div>
+            <div class="project-title">CubeSat Yazılım Geliştirme</div>
 
             <p class="project-desc">
-              CubeSat projesi kapsamında kartlar arası CAM haberleşme modülü.
-              Yer istasyonu ile RF bağlantısı ve veri aktarım protokolü.
+              CubeSat projesi kapsamında kontrol ve haberleşme algoritmalarını geliştirmekteyim.
+              Reaction Wheeller ile ADCS, görüntü aktarımı, haberleşme ve ilerleyen süreçte mesh yapısı ile ilgileneceğim.
             </p>
 
             <div class="project-tags">
               <span class="tag">CubeSat</span>
-              <span class="tag">RF</span>
+              <span class="tag">ADCS</span>
               <span class="tag">CAN</span>
-              <span class="tag">UART</span>
-              <span class="tag">Linux</span>
+              <span class="tag">STM32</span>
             </div>
 
             <div class="project-links">
@@ -215,18 +221,18 @@
               <span class="project-status status-active">Aktif</span>
             </div>
 
-            <div class="project-title">Otonom Rover</div>
+            <div class="project-title"> Tübitak 2209-A Destekli Otonom Rover</div>
 
             <p class="project-desc">
-              Lidar tabanlı haritalama yapabilen,
-              robotik kollu otonom rover sistemi.
+              Lidar tabanlı haritalama ve yön tayini yapabilen,
+              robotik kollu numune toplayabilen otonom rover sistemi.
             </p>
 
             <div class="project-tags">
-              <span class="tag">ROS</span>
               <span class="tag">Lidar</span>
-              <span class="tag">SLAM</span>
-              <span class="tag">ESP32</span>
+              <span class="tag">Grid Mapping</span>
+              <span class="tag">Ters Kinematik</span>
+              <span class="tag">STM32</span>
             </div>
           </div>
 
@@ -234,20 +240,22 @@
           <div class="project-card">
             <div class="project-meta">
               <span class="project-icon">🚀</span>
-              <span class="project-status status-dev">Ar-Ge</span>
+              <span class="project-status status-done">Tamamlandı</span>
             </div>
 
-            <div class="project-title">Görev Yükü Sönümleme</div>
+            <div class="project-title">STM32 Tabanlı Uçuş Kontrol Algoritması</div>
 
             <p class="project-desc">
-              Roket görev yükü için titreşim sönümleme sistemi ve
-              IMU tabanlı veri analizi.
+              Roket Yarışması için FreeRTOS tabanlı bir uçuş kontrol algoritması geliştirdim.
+              Sistem tek çekirdekli MCU üzerinde gerçek zamanlı olarak attitude kontrol yapmakta ve kontroller sonucu uygun zamanda paraşüt sistemlerini aktifleştirme amacıyla geliştirildi.
             </p>
 
             <div class="project-tags">
               <span class="tag">BNO055</span>
-              <span class="tag">MATLAB</span>
               <span class="tag">STM32</span>
+              <span class="tag">FreeRTOS</span>
+              <span class="tag">NMEA ayrıştırma</span>
+              <span class="tag">LoRa RF Haberleşme</span>
             </div>
           </div>
 
@@ -268,16 +276,22 @@
         <div class="cv-col">
           <h3>// Deneyim</h3>
           <div class="cv-item">
-            <div class="cv-date">Şubat 2026 — Mayıs 2026</div>
+            <div class="cv-date">Şubat 2026 — Günümüz</div>
             <div class="cv-role">Gömülü Sistemler Stajyeri</div>
             <div class="cv-place">Soylu Aerospace — Düzce</div>
             <div class="cv-detail">Donanım ve yazılım geliştirme alanlarında görev aldım.</div>
           </div>
           <div class="cv-item">
-            <div class="cv-date">2024 — Günümüz</div>
-            <div class="cv-role">Bağımsız Araştırmacı / Proje Geliştiricisi</div>
-            <div class="cv-place">Kişisel Projeler</div>
-            <div class="cv-detail">Drone otopilot sistemi, FCU+PDB kart tasarımı ve CubeSat haberleşme modülü.</div>
+            <div class="cv-date">2023 — 2025</div>
+            <div class="cv-role">Aviyonik Ekip Lideri/ Yönetim Kadrosu Üyesi</div>
+            <div class="cv-place">Havacılık ve Uzay Teknolojileri Topluluğu</div>
+            <div class="cv-detail">Roket kontrol ve haberleşme yazılımları, yer istasyonu arayüzü geliştirme alanlarında aktif görev aldım.</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-date">Aralık 2024- Mayıs 2025</div>
+            <div class="cv-role">Mentör</div>
+            <div class="cv-place">Denayap Teknoloji Atölyesi</div>
+            <div class="cv-detail">Öğrencilere dönemlerinin teması olan yapay zeka temalı bitirme projelerinde geniş alanlarda yönlendirme ve eksiklerini tamamlayarak destek oldum.</div>
           </div>
           <h3 style="margin-top:2rem;">// Ödüller & Başarılar</h3>
           <div class="cv-item">
@@ -298,8 +312,13 @@
           <h3 style="margin-top:2rem;">// Sertifikalar</h3>
           <div class="cv-item">
             <div class="cv-date">2025</div>
-            <div class="cv-role">Sertifika Adı</div>
+            <div class="cv-role">Teknofest Roket Yarışması</div>
             <div class="cv-place">Teknofest</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-date">2026</div>
+            <div class="cv-role">STM32 ile ARM Tabanlı Programlama</div>
+            <div class="cv-place">Udemy</div>
           </div>
         </div>
       </div>
