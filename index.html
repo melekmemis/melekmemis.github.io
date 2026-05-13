@@ -122,7 +122,7 @@
     .hero-img-back {
       position: absolute;
       top: 32px; right: 0;
-      width: 270px; height: 205px;
+      width: 350px; height: 205px;
       object-fit: cover;
       border-radius: 10px;
       border: 1px solid var(--border2);
@@ -140,14 +140,16 @@
       transition: all 0.35s ease;
       z-index: 2;
     }
-    .hero-images:hover .hero-img-front {
+    .hero-img-front:hover {
       transform: translate(-6px, -6px);
       border-color: var(--accent);
+      z-index: 3;
     }
-    .hero-images:hover .hero-img-back {
-      transform: translate(6px, 6px);
-      filter: brightness(0.9) saturate(1);
+    .hero-img-back:hover {
+      transform: translate(6px, 6px) !important;
+      filter: brightness(1) saturate(1) !important;
       border-color: var(--accent3);
+      z-index: 3;
     }
 
     /* placeholder ikinci resim yoksa */
@@ -302,7 +304,10 @@
       <div class="hero-inner">
         <div>
           <div class="hero-tag">Aerospace & Embedded Systems Engineer</div>
-          <h1>Melek<br><span>Memiş.</span></h1>
+          <div class="btn-row">
+            <img src="profile.png" width="100" height="133">
+            <h1>Melek<br><span>Memiş.</span></h1>
+          </div>
           <p class="hero-sub">
             <strong>STM32</strong> tabanlı gerçek zamanlı sistemler, uçuş yazılımları,<br>
             <strong>PCB</strong> tasarımı ve otonom robotik sistemler geliştirmekteyim.
@@ -334,7 +339,7 @@
 
           <!-- resim2.png yoksa placeholder gösterir, varsa resmi gösterir -->
           <div class="hero-img-back img-placeholder" id="ph2"
-               style="width:270px;height:205px;top:32px;right:0;position:absolute;">
+               style="width:364px;height:205px;top:32px;right:0;position:absolute;">
             <span>🛸</span><span>resim2.png</span>
           </div>
           <img src="resim2.png" alt="Proje görseli" class="hero-img-back"
@@ -367,6 +372,7 @@
             <span class="skill-chip">FreeRTOS</span>
             <span class="skill-chip">Python</span>
             <span class="skill-chip">Git / Linux</span>
+            <span class="skill-chip">ROS</span>
             <span class="skill-chip">Solidworks</span>
           </div>
         </div>
