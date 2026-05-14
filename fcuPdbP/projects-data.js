@@ -8,18 +8,15 @@ window.projectData = [
     "description": "Kendi tasarımım olan FCU + PDB kartı. Uçuş kontrol ve güç dağıtımını tek bir stack üzerinde birleştirmektedir. Güç hatları, MCU çevresel birimleri ve sensör bağlantıları dikkate alınarak 30.5 x 30.5 mm montaj standardı ile uyumlu olacak şekilde sıfırdan PCB tasarımı yapılmıştır.",
     "tags": ["Altium Designer", "STM32", "PCB Design"],
     "links": [
-      { "label": "FCU Altium Files", "url": "https://github.com/melekmemis/kdFCU" }, { "label": "PDB Altium Files", "url": "https://github.com/melekmemis/kdPDB" }
+      { "label": "GitHub", "url": "https://github.com/melekmemis/kdFCU" }
     ],
     "process": [
       { "text": "Sürece sistem gereksinimlerini belirleyerek başladım, mevcut uçuş kontrol kartlarını inceleyerek araştırmaya devam ettim, piyasadaki ürünlerde kullanılan komponentleri, özelliklerini detaylıca inceledim. Araştırmalarımın ardından komponentlerimi belirleyerek bir sistem blok diyagramı hazırladım.", "image": "fcuPdbP/blockD.jpg" },
       { "text": "Ardından şematikleri hazırlamaya başladım gerekli komponentler için kütüphaneleri oluşturdum ve bazı komponentler için de hazır kütüphaneler kullandım. Şematiklerimi MCU, komponentler ve konnektörler olarak üçe böldüm, Çift MCU desteği için uyumlu olmayan pinlerde atlama direnci ile switch yapısı kurdum.", "images": ["fcuPdbP/switchB.jpg", "fcuPdbP/bd1.jpg", "fcuPdbP/bd2.jpg", "fcuPdbP/bd3.jpg"] },
-      { "text": "Şematiklerin tamamlanmasının ardından layout'a geçtim komponent yerleimlerini üreticilerin önerilerine EMI performansına dikkat ederek yerleştirdim.", "images": ["fcuPdbP/kdFCU.png", "fcuPdbP/kdFCUb.png"] },
-      { "text": "Aynı adımları PDB tasarımında da uyguladım sistemi hem 5V çıkış hem de 12V/9V arasında geçiş yapılbilecek bir şekilde tasarladım, aynı zamanda voltaj ve akım ölçümü desteği de ekledim.", "images": ["fcuPdbP/pdbbd1.jpg", "fcuPdbP/kdPDB.png"] },
-      { "text": "Daha sonra gerekli standoff boyutunu belirleyip montajı gerçekleştirdim.", "image": "fcuPdbP/videoCover/assem.png" }
+      { "text": "Şematiklerin tamamlanmasının ardından layout'a geçtim komponent yerleimlerini üreticilerin önerilerine EMI performansına dikkat ederek yerleştirdim.", "video": "fcuPdbP/ATkdFCUstack.avi" },
+      { "text": "Aynı adımları PDB tasarımında da uyguladım sistemi hem 5V çıkış hem de 12V/9V arasında geçiş yapılbilecek bir şekilde tasarladım, aynı zamanda voltaj ve akım ölçümü desteği de ekledim.", "images": ["fcuPdbP/pdbbd1.jpg", "fcuPdbP/bd1.jpg"] }
     ],
-    "images": ["fcuPdbP/1.png", "fcuPdbP/2.png", "fcuPdbP/3.png",
-      { "url": "fcuPdbP/ATkdFCUstack.mp4", "poster": "fcuPdbP/videoCover/assem.png" }
-    ]
+    "images": ["resim2.png"], "video": "fcuPdbP/ATkdFCUstack.mp4"
   },
   {
     "id": "real-time-autopilot",

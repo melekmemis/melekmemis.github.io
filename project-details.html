@@ -27,11 +27,16 @@
   </main>
 
   <!-- Lightbox Modal -->
-  <div id="imageModal" class="modal" onclick="closeLightbox()">
-    <img class="modal-content" id="modalImg" style="display: none;">
-    <div class="modal-video" id="modalVidContainer" style="display: none;">
-      <!-- Video/Iframe will be injected here -->
+  <div id="imageModal" class="modal">
+    <span class="modal-close" onclick="closeLightbox()">&times;</span>
+    <button class="modal-nav modal-prev" onclick="prevImage(event)">&#10094;</button>
+    
+    <div class="modal-content-wrapper">
+      <img class="modal-content" id="modalImg" style="display: none;">
+      <div class="modal-video" id="modalVidContainer" style="display: none;"></div>
     </div>
+
+    <button class="modal-nav modal-next" onclick="nextImage(event)">&#10095;</button>
   </div>
 
   <footer>
@@ -98,9 +103,23 @@
               <ul class="process-list">
                 ${project.process.map(step => {
                   const stepText = typeof step === 'string' ? step : step.text;
-                  const stepImg = (typeof step === 'object' && step.image) ? `
-                    <div class="step-image" onclick="openLightbox('${step.image}')">
-                      <img src="${step.image}" alt="Süreç görseli" onerror="this.style.display='none'">
+                  
+                  // Handle multiple images or single image
+                  const stepImages = [];
+                  if (typeof step === 'object') {
+                    if (step.image) stepImages.push(step.image);
+                    if (step.images && Array.isArray(step.images)) {
+                      stepImages.push(...step.images);
+                    }
+                  }
+
+                  const imagesHtml = stepImages.length > 0 ? `
+                    <div class="step-images-container ${stepImages.length >= 3 ? 'is-stack' : ''}">
+                      ${stepImages.map(img => `
+                        <div class="step-image" onclick="handleImageClick(event, '${img}', ${JSON.stringify(stepImages).replace(/"/g, "'")})">
+                          <img src="${img}" alt="Süreç görseli" onerror="this.style.display='none'">
+                        </div>
+                      `).join('')}
                     </div>
                   ` : '';
 
@@ -117,7 +136,7 @@
                              <img src="https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg" alt="Video kapak">
                              <div class="play-icon">▶</div>
                            </div>` :
-                          `<video><source src="${vidUrl}" type="video/mp4"></video>`
+                          `<video ${step.poster ? `poster="${step.poster}"` : ''}><source src="${vidUrl}" type="video/mp4"></video>`
                         }
                       </div>
                     `;
@@ -126,7 +145,7 @@
                   return `
                     <li class="process-step">
                       <div class="step-content">${stepText}</div>
-                      ${stepImg}
+                      ${imagesHtml}
                       ${stepVid}
                     </li>
                   `;
@@ -140,13 +159,22 @@
         if (project.images && project.images.length > 0) {
           galleryHtml = `
             <div class="detail-section fade-in">
-              <h3>Fotoğraflar</h3>
+              <h3>Fotoğraf & Videolar</h3>
               <div class="gallery-grid">
-                ${project.images.map(img => `
-                  <div class="gallery-item" onclick="openLightbox('${img}')" style="cursor: zoom-in;">
-                    <img src="${img}" alt="${project.title}" onerror="this.src='https://via.placeholder.com/800x450?text=Görsel+Bulunamadı'">
-                  </div>
-                `).join('')}
+                ${project.images.map(item => {
+                  const isObj = typeof item === 'object';
+                  const url = isObj ? item.url : item;
+                  const poster = isObj ? item.poster : '';
+                  const isVideo = url.toLowerCase().endsWith('.mp4');
+                  return `
+                    <div class="gallery-item" onclick="openLightbox('${url}', '${isVideo ? 'video' : 'image'}')" style="cursor: zoom-in;">
+                      ${isVideo ? 
+                        `<video muted loop onmouseover="this.play()" onmouseout="this.pause()" ${poster ? `poster="${poster}"` : ''}><source src="${url}" type="video/mp4"></video>` :
+                        `<img src="${url}" alt="${project.title}" onerror="this.src='https://via.placeholder.com/800x450?text=Görsel+Bulunamadı'">`
+                      }
+                    </div>
+                  `;
+                }).join('')}
               </div>
             </div>
           `;
@@ -181,16 +209,36 @@
           document.querySelectorAll('.fade-in').forEach(el => window.observer.observe(el));
         }
 
+        // Auto-detect square images and adjust box ratio
+        document.querySelectorAll('.step-image img').forEach(img => {
+          const checkRatio = () => {
+            const ratio = img.naturalWidth / img.naturalHeight;
+            if (ratio > 0.8 && ratio < 1.2) {
+              img.parentElement.classList.add('is-square');
+            }
+          };
+          if (img.complete) checkRatio();
+          else img.onload = checkRatio;
+        });
+
       } catch (error) {
         console.error('Error loading project:', error);
         contentDiv.innerHTML = `<h2>Bir hata oluştu.</h2><p style="color: var(--text3); font-family: var(--mono); font-size: 12px;">${error.message}</p>`;
       }
     }
 
-    function openLightbox(src, type = 'image') {
+    let currentGallery = [];
+    let currentGalleryIndex = 0;
+
+    function openLightbox(src, type = 'image', gallery = []) {
       const modal = document.getElementById('imageModal');
       const modalImg = document.getElementById('modalImg');
       const modalVid = document.getElementById('modalVidContainer');
+      
+      currentGallery = gallery.length > 0 ? gallery : [src];
+      currentGalleryIndex = currentGallery.indexOf(src);
+      if (currentGalleryIndex === -1) currentGalleryIndex = 0;
+
       modalImg.style.display = 'none';
       modalVid.style.display = 'none';
       modalVid.innerHTML = '';
@@ -206,7 +254,46 @@
         modalImg.style.display = 'block';
         modalImg.src = src;
       }
+      
+      updateLightboxButtons();
       modal.classList.add('active');
+
+      // Close on background click
+      modal.onclick = function(e) {
+        if (e.target === modal || e.target.classList.contains('modal-content-wrapper')) {
+          closeLightbox();
+        }
+      };
+    }
+
+    function updateLightboxButtons() {
+      const prevBtn = document.querySelector('.modal-prev');
+      const nextBtn = document.querySelector('.modal-next');
+      
+      if (currentGallery.length > 1) {
+        prevBtn.style.display = 'block';
+        nextBtn.style.display = 'block';
+      } else {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+      }
+    }
+
+    function prevImage(e) {
+      e.stopPropagation();
+      currentGalleryIndex = (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
+      document.getElementById('modalImg').src = currentGallery[currentGalleryIndex];
+    }
+
+    function nextImage(e) {
+      e.stopPropagation();
+      currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
+      document.getElementById('modalImg').src = currentGallery[currentGalleryIndex];
+    }
+
+    function handleImageClick(e, src, gallery = []) {
+      // User requested direct open
+      openLightbox(src, 'image', gallery);
     }
 
     function closeLightbox() {
