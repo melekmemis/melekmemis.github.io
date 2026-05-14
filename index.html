@@ -26,12 +26,12 @@
         <div>
           <div class="hero-tag">Embedded Systems & Autonomous Robotics Engineer</div>
           <div class="btn-row">
-            <img src="profile.png" width="100" height="133" class="hero-img-radius";>
+            <img src="profile.png" width="95" height="125" class="hero-img-radius";>
             <h1>Melek<br><span>Memiş</span></h1>
           </div>
           <p class="hero-sub">
-            <strong>Gömülü sistemler,</strong> uçuş kontrol yazılımları ve otonom robotik platformlar geliştiriyorum.  
-            STM32 tabanlı gerçek zamanlı sistemler, sensör füzyonu ve PCB tasarımı üzerine çalışıyorum.
+            <strong>Gömülü sistemler,</strong> haberleşme ve aviyonik kart tasarımı üzerine çalışıyorum.
+            STM32 ve Linux tabanlı gerçek zamanlı kontrol ve otonom sistemler geliştiriyorum.
           </p>
           <div class="btn-row">
             <a href="cv.pdf" download class="btn btn-primary">↓ CV İndir</a>
@@ -44,7 +44,7 @@
             <a href="https://linkedin.com/in/melekmemis" class="hero-icon-link" target="_blank" title="LinkedIn">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#0077b5"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
             </a>
-            <a href="https://youtube.com/@memismelek" class="hero-icon-link" target="_blank" title="YouTube">
+            <a href="https://youtube.com/@" class="hero-icon-link" target="_blank" title="YouTube">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff3333"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
             </a>
             <a href="mailto:memismelek@yahoo.com" class="hero-icon-link" title="E-posta">
@@ -100,7 +100,7 @@
             <span class="skill-chip">Altium Designer</span>
             <span class="skill-chip">FreeRTOS</span>
             <span class="skill-chip">Python</span>
-            <span class="skill-chip">Git / Linux</span>
+            <span class="skill-chip">Linux</span>
             <span class="skill-chip">ROS</span>
             <span class="skill-chip">Solidworks</span>
           </div>
@@ -125,7 +125,7 @@
         <div class="projects-slider" id="projectsSlider">
 
           <!-- PROJECT 1 -->
-          <div class="project-card featured">
+          <div class="project-card featured" onclick="location.href='project-details.html?project=fcu-pdb'" style="cursor: pointer;">
             <div class="project-meta">
               <span class="project-icon">🔲</span>
               <span class="project-status status-done">Tamamlandı</span>
@@ -147,14 +147,15 @@
             <div class="project-links">
               <a href="https://github.com/melekmemis/kdFCU"
                  class="project-link"
-                 target="_blank">
+                 target="_blank"
+                 onclick="event.stopPropagation();">
                 ⌥ GitHub
               </a>
             </div>
           </div>
 
           <!-- PROJECT 2 -->
-          <div class="project-card">
+          <div class="project-card" onclick="location.href='project-details.html?project=real-time-autopilot'" style="cursor: pointer;">
             <div class="project-meta">
               <span class="project-icon">🛸</span>
               <span class="project-status status-active">Aktif Geliştirme</span>
@@ -174,69 +175,10 @@
               <span class="tag">EKF</span>
               <span class="tag">PID</span>
             </div>
-
-            <div class="project-links">
-              <a href="https://github.com/melekmemis/autopilot"
-                 class="project-link"
-                 target="_blank">
-                ⌥ GitHub
-              </a>
-            </div>
           </div>
 
           <!-- PROJECT 3 -->
-          <div class="project-card">
-            <div class="project-meta">
-              <span class="project-icon">🛰️</span>
-              <span class="project-status status-dev">Geliştiriliyor</span>
-            </div>
-
-            <div class="project-title">CubeSat Yazılım Geliştirme</div>
-
-            <p class="project-desc">
-              CubeSat projesi kapsamında ADCS, haberleşme ve kartlar arası iletişim altyapısını geliştiriyorum. Reaction wheel tabanlı yön kontrolü ve yer istasyonu ile veri aktarımı üzerine çalışıyorum.
-            </p>
-
-            <div class="project-tags">
-              <span class="tag">CubeSat</span>
-              <span class="tag">ADCS</span>
-              <span class="tag">CAN</span>
-              <span class="tag">STM32</span>
-            </div>
-
-            <div class="project-links">
-              <a href="https://github.com/melekmemis/cubesat"
-                 class="project-link"
-                 target="_blank">
-                ⌥ GitHub
-              </a>
-            </div>
-          </div>
-
-          <!-- PROJECT 4 -->
-          <div class="project-card">
-            <div class="project-meta">
-              <span class="project-icon">🤖</span>
-              <span class="project-status status-active">Aktif</span>
-            </div>
-
-            <div class="project-title"> Tübitak 2209-A Destekli Otonom Rover</div>
-
-            <p class="project-desc">
-              Lidar tabanlı haritalama ve yön tayini yapabilen,
-              robotik kollu numune toplayabilen otonom rover sistemi.
-            </p>
-
-            <div class="project-tags">
-              <span class="tag">Lidar</span>
-              <span class="tag">Grid Mapping</span>
-              <span class="tag">Ters Kinematik</span>
-              <span class="tag">STM32</span>
-            </div>
-          </div>
-
-          <!-- PROJECT 5 -->
-          <div class="project-card">
+          <div class="project-card" onclick="location.href='project-details.html?project=stm32-flight-control'" style="cursor: pointer;">
             <div class="project-meta">
               <span class="project-icon">🚀</span>
               <span class="project-status status-done">Tamamlandı</span>
@@ -256,8 +198,58 @@
               <span class="tag">NMEA ayrıştırma</span>
               <span class="tag">LoRa RF Haberleşme</span>
             </div>
+
+            <div class="project-links">
+              <a href="https://github.com/melekmemis/UKBAlgFreeRTOS"
+                 class="project-link"
+                 target="_blank"
+                 onclick="event.stopPropagation();">
+                ⌥ GitHub
+              </a>
+            </div>
           </div>
 
+          <!-- PROJECT 4 -->
+          <div class="project-card" onclick="location.href='project-details.html?project=cubesat-software'" style="cursor: pointer;">
+            <div class="project-meta">
+              <span class="project-icon">🛰️</span>
+              <span class="project-status status-dev">Geliştiriliyor</span>
+            </div>
+
+            <div class="project-title">CubeSat Yazılım Geliştirme</div>
+
+            <p class="project-desc">
+              CubeSat projesi kapsamında ADCS, haberleşme ve kartlar arası iletişim altyapısını geliştiriyorum. Reaction wheel tabanlı yön kontrolü ve yer istasyonu ile veri aktarımı üzerine çalışıyorum.
+            </p>
+
+            <div class="project-tags">
+              <span class="tag">CubeSat</span>
+              <span class="tag">ADCS</span>
+              <span class="tag">CAN</span>
+              <span class="tag">STM32</span>
+            </div>
+          </div>
+
+          <!-- PROJECT 5 -->
+          <div class="project-card" onclick="location.href='project-details.html?project=autonomous-rover'" style="cursor: pointer;">
+            <div class="project-meta">
+              <span class="project-icon">🤖</span>
+              <span class="project-status status-active">Aktif</span>
+            </div>
+
+            <div class="project-title"> Tübitak 2209-A Destekli Otonom Rover</div>
+
+            <p class="project-desc">
+              LiDAR tabanlı haritalandırma, yön tayini ve robotik kol ile numune toplama görevlerini gerçekleştirebilen modüler bir keşif platformudur. STM32 tabanlı gömülü sistem altyapısı kullanan rover, sensör verilerini gerçek zamanlı işleyerek otonom hareket, engel algılama ve çevresel veri toplama yeteneklerine sahip bir sistem geliştirmekteyim.
+            </p>
+
+            <div class="project-tags">
+              <span class="tag">Lidar</span>
+              <span class="tag">Grid Mapping</span>
+              <span class="tag">Ters Kinematik</span>
+              <span class="tag">STM32</span>
+            </div>
+          </div>
         </div>
 
         <button class="slider-btn next" id="nextBtn">→</button>
@@ -306,7 +298,6 @@
             <div class="cv-date">2021 — Günümüz</div>
             <div class="cv-role">Mekatronik Mühendisliği</div>
             <div class="cv-place">Düzce Üniversitesi</div>
-            <div class="cv-detail">GPA: 2.51</div>
           </div>
           <h3 style="margin-top:2rem;">// Sertifikalar</h3>
           <div class="cv-item">
@@ -316,7 +307,7 @@
           </div>
           <div class="cv-item">
             <div class="cv-date">2026</div>
-            <div class="cv-role">STM32 ile ARM Tabanlı Programlama</div>
+            <div class="cv-role">STM32F4 Discovery Kartı İle Sıfırdan İleri Seviyeye Arm Programlama Dersleri</div>
             <div class="cv-place">Udemy</div>
           </div>
         </div>
@@ -335,7 +326,7 @@
       <div class="contact-inner">
         <div class="contact-text fade-in">
           <h2>Selamlaşalım.</h2>
-          <p>Drone, CubeSat veya gömülü sistemler üzerine işbirliği ve proje teklifleri için ulaşabilirsiniz.</p>
+          <p>Merak ettikleriniz için iletişime geçebilirsiniz.</p>
           <a href="mailto:memismelek@yahoo.com" class="btn btn-primary">✉ Mail Gönder</a>
         </div>
         <div class="social-grid fade-in">
@@ -344,7 +335,7 @@
             <div class="social-info"><span class="social-name">GitHub</span><span class="social-handle">@melekmemis</span></div>
             <span class="social-arrow">→</span>
           </a>
-          <a href="https://youtube.com/@memismelek" class="social-link" target="_blank">
+          <a href="https://youtube.com/@" class="social-link" target="_blank">
             <div class="social-icon yt"><svg width="18" height="18" viewBox="0 0 24 24" fill="#ff3333"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div>
             <div class="social-info"><span class="social-name">YouTube</span><span class="social-handle">@memismelek</span></div>
             <span class="social-arrow">→</span>

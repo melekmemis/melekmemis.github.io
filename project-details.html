@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proje Detayları — Melek Memiş</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="project-detail-page">
+
+  <nav>
+    <span class="nav-logo">~/melekmemis / projects $</span>
+    <ul class="nav-links">
+      <li><a href="index.html#projects">back to main</a></li>
+    </ul>
+  </nav>
+
+  <main class="container detail-hero">
+    <a href="index.html#projects" class="back-link">← Projelere Dön</a>
+    
+    <div id="project-content">
+      <!-- Content will be loaded via JS -->
+      <div class="loading">Yükleniyor...</div>
+    </div>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="imageModal" class="modal" onclick="this.classList.remove('active')">
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <footer>
+    <span class="footer-copy">© 2025 Melek Memiş</span>
+    <span class="footer-built">built with <span>♥</span> — project architecture</span>
+  </footer>
+
+  <script src="projects-data.js"></script>
+  <script src="script.js"></script>
+  <script>
+    function loadProject() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const projectId = urlParams.get('project');
+      const contentDiv = document.getElementById('project-content');
+
+      if (!projectId) {
+        contentDiv.innerHTML = '<h2>Proje bulunamadı.</h2><a href="index.html">Ana sayfaya dön</a>';
+        return;
+      }
+
+      try {
+        const projects = window.projectData;
+        
+        if (!projects) {
+          contentDiv.innerHTML = '<h2>Veri yüklenemedi.</h2>';
+          return;
+        }
+
+        const project = projects.find(p => p.id === projectId);
+
+        if (!project) {
+          contentDiv.innerHTML = '<h2>Proje bulunamadı.</h2><a href="index.html">Ana sayfaya dön</a>';
+          return;
+        }
+
+        document.title = `${project.title} — Melek Memiş`;
+
+        let linksHtml = '';
+        if (project.links && project.links.length > 0) {
+          linksHtml = `
+            <div class="sidebar-box">
+              <h4>Bağlantılar</h4>
+              <div class="project-links">
+                ${project.links.map(l => `
+                  <a href="${l.url}" class="btn btn-outline" target="_blank" style="width: 100%; justify-content: center; margin-bottom: 0.5rem;">${l.label}</a>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        let processHtml = '';
+        if (project.process && project.process.length > 0) {
+          processHtml = `
+            <div class="detail-section fade-in">
+              <h3>Süreç</h3>
+              <ul class="process-list">
+                ${project.process.map(step => {
+                  const stepText = typeof step === 'string' ? step : step.text;
+                  const stepImg = (typeof step === 'object' && step.image) ? `
+                    <div class="step-image" onclick="openLightbox('${step.image}')">
+                      <img src="${step.image}" alt="Süreç görseli" onerror="this.style.display='none'">
+                    </div>
+                  ` : '';
+
+                  let stepVid = '';
+                  if (typeof step === 'object' && step.video) {
+                    if (step.video.includes('youtube.com') || step.video.includes('youtu.be')) {
+                      // YouTube Embed - Simple extraction
+                      let vidId = '';
+                      if (step.video.includes('v=')) {
+                        vidId = step.video.split('v=')[1].split('&')[0];
+                      } else if (step.video.includes('youtu.be/')) {
+                        vidId = step.video.split('youtu.be/')[1].split('?')[0];
+                      } else if (step.video.includes('shorts/')) {
+                        vidId = step.video.split('shorts/')[1].split('?')[0];
+                      } else if (step.video.includes('embed/')) {
+                        vidId = step.video.split('embed/')[1].split('?')[0];
+                      }
+                      
+                      if (vidId) {
+                        stepVid = `
+                          <div class="step-video">
+                            <iframe src="https://www.youtube.com/embed/${vidId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                          </div>
+                        `;
+                      }
+                    } else {
+                      // Local Video
+                      stepVid = `
+                        <div class="step-video">
+                          <video controls>
+                            <source src="${step.video}" type="video/mp4">
+                            Tarayıcınız video etiketini desteklemiyor.
+                          </video>
+                        </div>
+                      `;
+                    }
+                  }
+
+                  return `
+                    <li class="process-step">
+                      <div class="step-content">${stepText}</div>
+                      ${stepImg}
+                      ${stepVid}
+                    </li>
+                  `;
+                }).join('')}
+              </ul>
+            </div>
+          `;
+        }
+
+        let galleryHtml = '';
+        if (project.images && project.images.length > 0) {
+          galleryHtml = `
+            <div class="detail-section fade-in">
+              <h3>Fotoğraflar</h3>
+              <div class="gallery-grid">
+                ${project.images.map(img => `
+                  <div class="gallery-item" onclick="openLightbox('${img}')" style="cursor: zoom-in;">
+                    <img src="${img}" alt="${project.title}" onerror="this.src='https://via.placeholder.com/800x450?text=Görsel+Bulunamadı'">
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        contentDiv.innerHTML = `
+          <div class="project-header fade-in">
+            <span class="project-status ${project.statusClass}">${project.status}</span>
+            <h1>${project.title}</h1>
+            <p class="hero-sub">${project.description}</p>
+          </div>
+
+          <div class="detail-grid">
+            <div class="detail-main">
+              ${processHtml}
+              ${galleryHtml}
+            </div>
+            
+            <aside class="project-sidebar fade-in">
+              <div class="sidebar-box">
+                <h4>Teknolojiler</h4>
+                <div class="project-tags">
+                  ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+              </div>
+              ${linksHtml}
+            </aside>
+          </div>
+        `;
+
+        // Re-run the observer for new content
+        if (window.observer) {
+          document.querySelectorAll('.fade-in').forEach(el => window.observer.observe(el));
+        }
+
+      } catch (error) {
+        console.error('Error loading project:', error);
+        contentDiv.innerHTML = `<h2>Bir hata oluştu.</h2><p style="color: var(--text3); font-family: var(--mono); font-size: 12px;">${error.message}</p>`;
+      }
+    }
+
+    function openLightbox(src) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      modalImg.src = src;
+      modal.classList.add('active');
+    }
+
+    window.onload = loadProject;
+  </script>
+</body>
+</html>
