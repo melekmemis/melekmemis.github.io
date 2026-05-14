@@ -169,7 +169,12 @@
                   return `
                     <div class="gallery-item" onclick="openLightbox('${url}', '${isVideo ? 'video' : 'image'}')" style="cursor: zoom-in;">
                       ${isVideo ? 
-                        `<video muted loop onmouseover="this.play()" onmouseout="this.pause()" ${poster ? `poster="${poster}"` : ''}><source src="${url}" type="video/mp4"></video>` :
+                        `<div class="video-preview-wrapper" style="width: 100%; height: 100%; position: relative;">
+                           <video ${poster ? `poster="${poster}"` : ''} style="width: 100%; height: 100%; object-fit: cover;">
+                             <source src="${url}" type="video/mp4">
+                           </video>
+                           <div class="play-icon">▶</div>
+                         </div>` :
                         `<img src="${url}" alt="${project.title}" onerror="this.src='https://via.placeholder.com/800x450?text=Görsel+Bulunamadı'">`
                       }
                     </div>
@@ -249,7 +254,7 @@
         modalVid.innerHTML = `<iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
       } else if (type === 'video') {
         modalVid.style.display = 'block';
-        modalVid.innerHTML = `<video controls autoplay><source src="${src}" type="video/mp4"></video>`;
+        modalVid.innerHTML = `<video controls autoplay playsinline><source src="${src}" type="video/mp4"></video>`;
       } else {
         modalImg.style.display = 'block';
         modalImg.src = src;
