@@ -27,8 +27,11 @@
   </main>
 
   <!-- Lightbox Modal -->
-  <div id="imageModal" class="modal" onclick="this.classList.remove('active')">
-    <img class="modal-content" id="modalImg">
+  <div id="imageModal" class="modal" onclick="closeLightbox()">
+    <img class="modal-content" id="modalImg" style="display: none;">
+    <div class="modal-video" id="modalVidContainer" style="display: none;">
+      <!-- Video/Iframe will be injected here -->
+    </div>
   </div>
 
   <footer>
@@ -39,6 +42,15 @@
   <script src="projects-data.js"></script>
   <script src="script.js"></script>
   <script>
+    function getYouTubeId(url) {
+      let vidId = '';
+      if (url.includes('v=')) vidId = url.split('v=')[1].split('&')[0];
+      else if (url.includes('youtu.be/')) vidId = url.split('youtu.be/')[1].split('?')[0];
+      else if (url.includes('shorts/')) vidId = url.split('shorts/')[1].split('?')[0];
+      else if (url.includes('embed/')) vidId = url.split('embed/')[1].split('?')[0];
+      return vidId;
+    }
+
     function loadProject() {
       const urlParams = new URLSearchParams(window.location.search);
       const projectId = urlParams.get('project');
@@ -51,14 +63,12 @@
 
       try {
         const projects = window.projectData;
-        
         if (!projects) {
           contentDiv.innerHTML = '<h2>Veri yüklenemedi.</h2>';
           return;
         }
 
         const project = projects.find(p => p.id === projectId);
-
         if (!project) {
           contentDiv.innerHTML = '<h2>Proje bulunamadı.</h2><a href="index.html">Ana sayfaya dön</a>';
           return;
@@ -96,37 +106,16 @@
 
                   let stepVid = '';
                   if (typeof step === 'object' && step.video) {
-                    if (step.video.includes('youtube.com') || step.video.includes('youtu.be')) {
-                      // YouTube Embed - Simple extraction
-                      let vidId = '';
-                      if (step.video.includes('v=')) {
-                        vidId = step.video.split('v=')[1].split('&')[0];
-                      } else if (step.video.includes('youtu.be/')) {
-                        vidId = step.video.split('youtu.be/')[1].split('?')[0];
-                      } else if (step.video.includes('shorts/')) {
-                        vidId = step.video.split('shorts/')[1].split('?')[0];
-                      } else if (step.video.includes('embed/')) {
-                        vidId = step.video.split('embed/')[1].split('?')[0];
-                      }
-                      
-                      if (vidId) {
-                        stepVid = `
-                          <div class="step-video">
-                            <iframe src="https://www.youtube.com/embed/${vidId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                          </div>
-                        `;
-                      }
-                    } else {
-                      // Local Video
-                      stepVid = `
-                        <div class="step-video">
-                          <video controls>
-                            <source src="${step.video}" type="video/mp4">
-                            Tarayıcınız video etiketini desteklemiyor.
-                          </video>
-                        </div>
-                      `;
-                    }
+                    const vidUrl = step.video;
+                    const isYoutube = vidUrl.includes('youtube.com') || vidUrl.includes('youtu.be');
+                    stepVid = `
+                      <div class="step-video" onclick="openLightbox('${vidUrl}', '${isYoutube ? 'youtube' : 'video'}')">
+                        ${isYoutube ? 
+                          `<iframe src="https://www.youtube.com/embed/${getYouTubeId(vidUrl)}" frameborder="0"></iframe>` :
+                          `<video><source src="${vidUrl}" type="video/mp4"></video>`
+                        }
+                      </div>
+                    `;
                   }
 
                   return `
@@ -183,7 +172,6 @@
           </div>
         `;
 
-        // Re-run the observer for new content
         if (window.observer) {
           document.querySelectorAll('.fade-in').forEach(el => window.observer.observe(el));
         }
@@ -194,11 +182,33 @@
       }
     }
 
-    function openLightbox(src) {
+    function openLightbox(src, type = 'image') {
       const modal = document.getElementById('imageModal');
       const modalImg = document.getElementById('modalImg');
-      modalImg.src = src;
+      const modalVid = document.getElementById('modalVidContainer');
+      modalImg.style.display = 'none';
+      modalVid.style.display = 'none';
+      modalVid.innerHTML = '';
+
+      if (type === 'youtube') {
+        modalVid.style.display = 'block';
+        const vidId = getYouTubeId(src);
+        modalVid.innerHTML = `<iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+      } else if (type === 'video') {
+        modalVid.style.display = 'block';
+        modalVid.innerHTML = `<video controls autoplay><source src="${src}" type="video/mp4"></video>`;
+      } else {
+        modalImg.style.display = 'block';
+        modalImg.src = src;
+      }
       modal.classList.add('active');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('imageModal');
+      const modalVid = document.getElementById('modalVidContainer');
+      modal.classList.remove('active');
+      modalVid.innerHTML = '';
     }
 
     window.onload = loadProject;
