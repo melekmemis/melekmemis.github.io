@@ -108,10 +108,15 @@
                   if (typeof step === 'object' && step.video) {
                     const vidUrl = step.video;
                     const isYoutube = vidUrl.includes('youtube.com') || vidUrl.includes('youtu.be');
+                    const youtubeId = isYoutube ? getYouTubeId(vidUrl) : '';
+                    
                     stepVid = `
                       <div class="step-video" onclick="openLightbox('${vidUrl}', '${isYoutube ? 'youtube' : 'video'}')">
                         ${isYoutube ? 
-                          `<iframe src="https://www.youtube.com/embed/${getYouTubeId(vidUrl)}" frameborder="0"></iframe>` :
+                          `<div class="video-thumbnail">
+                             <img src="https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg" alt="Video kapak">
+                             <div class="play-icon">▶</div>
+                           </div>` :
                           `<video><source src="${vidUrl}" type="video/mp4"></video>`
                         }
                       </div>

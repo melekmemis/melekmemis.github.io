@@ -380,7 +380,7 @@ footer {
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
 /* PROJECT DETAILS PAGE */
-.detail-hero { padding: 8rem 0 4rem; }
+.detail-hero { padding: 5rem 0 2rem; }
 .back-link { 
   display: inline-flex; align-items: center; gap: 0.5rem; 
   font-family: var(--mono); font-size: 12px; color: var(--accent); 
@@ -388,9 +388,9 @@ footer {
 }
 .back-link:hover { transform: translateX(-5px); }
 
-.project-header { margin-bottom: 3rem; }
-.project-header h1 { margin-bottom: 1rem; }
-.project-header .project-status { margin-bottom: 1.5rem; display: inline-block; }
+.project-header { margin-bottom: 2rem; }
+.project-header h1 { margin-bottom: 0.5rem; font-size: clamp(1.8rem, 4vw, 2.4rem); }
+.project-header .project-status { margin-bottom: 1rem; display: inline-block; }
 
 .detail-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; margin-top: 2rem; }
 
@@ -402,21 +402,19 @@ footer {
 }
 .detail-section h3::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-.process-list { list-style: none; }
+.process-list { list-style: none; border-left: 1px solid var(--border); margin-left: 5px; }
 .process-step { 
-  position: relative; padding-left: 2rem; margin-bottom: 1.5rem; 
+  position: relative; padding-left: 2rem; margin-bottom: 2rem; 
   font-size: 15px; color: var(--text2); line-height: 1.6;
 }
 .process-step::before { 
-  content: '0' counter(step-counter); 
-  counter-increment: step-counter;
-  position: absolute; left: 0; top: 0; 
-  font-family: var(--mono); font-size: 10px; color: var(--accent);
-  background: var(--surface); border: 1px solid var(--border);
-  width: 24px; height: 24px; display: flex; align-items: center; 
-  justify-content: center; border-radius: 4px;
+  content: ''; 
+  position: absolute; left: -4px; top: 0.5rem; 
+  width: 7px; height: 7px;
+  background: var(--accent); 
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent);
 }
-.process-list { counter-reset: step-counter; }
 
 .step-content { margin-bottom: 1rem; }
 .step-image { 
@@ -434,10 +432,23 @@ footer {
   height: 0; cursor: zoom-in; transition: transform 0.2s;
 }
 .step-video:hover { transform: scale(1.02); border-color: var(--accent); }
-.step-video iframe, .step-video video { 
+.step-video iframe, .step-video video, .video-thumbnail { 
   position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; 
-  pointer-events: none; /* Disable interaction on thumbnail */
+  pointer-events: none;
 }
+.video-thumbnail img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: opacity 0.3s; }
+.step-video:hover .video-thumbnail img { opacity: 1; }
+
+.play-icon {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 44px; height: 44px; background: rgba(255, 255, 255, 0.15); 
+  color: white; border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; backdrop-filter: blur(4px);
+  opacity: 0.9; transition: all 0.3s;
+}
+.step-video:hover .play-icon { transform: translate(-50%, -50%) scale(1.1); background: rgba(255, 255, 255, 0.3); border-color: white; }
+
 /* If it's a local video without padding-bottom hack */
 .step-video:has(video) { height: auto; padding-bottom: 0; }
 .step-video video { position: relative; }
