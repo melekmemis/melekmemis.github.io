@@ -595,12 +595,14 @@ footer {
   to { opacity: 1; }
 }
 
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+.gallery-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; }
 .gallery-item { 
+  width: 200px;
   border-radius: 12px; overflow: hidden; border: 1px solid var(--border); 
   background: var(--surface); aspect-ratio: 16/9;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  flex-shrink: 0;
 }
 .gallery-item:hover { 
   transform: translateY(-5px); 
