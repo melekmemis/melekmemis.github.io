@@ -5,7 +5,7 @@ window.projectData = [
     "status": "Tamamlandı",
     "statusClass": "status-done",
     "icon": "🔲",
-    "description": "AT-kdFCU, 216 MHz'de çalışan ARM Cortex-M7 işlemci üzerine inşa edilmiş, çift IMU mimarisi (BMI088 + ICM-42688-P), CAN bus, 5 UART, microSD kayıt ve 8 PWM çıkışıyla donatılmış bir uçuş kontrol kartıdır. AT-kdPDB ise 6S girişten regüle 5V ve seçilebilir 9V/12V Vx hattı üreten, INA240A1 tabanlı akım ölçümü içeren güç dağıtım kartıdır. İki kart stack mimarisinde birleşerek güç ve sensör devrelerini elektromanyetik açıdan birbirinden yalıtır. Her iki kart da 30.5×30.5 mm standart montaj ölçüsüne uygundur ve bağımsız olarak da kullanılabilir.",
+    "description": "216 MHz hızında çalışan ARM Cortex-M7 tabanlı bir uçuş kontrol kartı geliştirdim. Kart üzerinde çift IMU mimarisi olarak BMI088 ve ICM-42688-P kullandım. Bunun yanında CAN bus haberleşmesi, 5 adet UART hattı, microSD veri kaydı ve 8 PWM çıkışı gibi özellikler yer alıyor. Güç dağıtım tarafında geliştirdiğim AT-kdPDB ise 6S girişten regüle 5V ve seçilebilir 9V/12V Vx hattı üretiyor. Ayrıca INA240A1 tabanlı akım ölçümü ile sistemin güç tüketimini izleyebiliyor. İki kartı stack mimarisinde tasarlayarak güç ve sensör devrelerini elektromanyetik açıdan birbirinden ayırmayı hedefledim. Böylece özellikle IMU ve hassas sensör tarafında oluşabilecek gürültüyü azaltmayı amaçladım. Her iki kart da 30.5×30.5 mm standart montaj ölçülerine uygun olacak şekilde tasarlandı ve bağımsız olarak kullanılabilecek yapıda geliştirildi.",
     "tags": ["Altium Designer", "STM32", "PCB Design"],
     "links": [
       { "label": "FCU Altium Files", "url": "https://github.com/melekmemis/kdFCU" }, { "label": "PDB Altium Files", "url": "https://github.com/melekmemis/kdPDB" }
