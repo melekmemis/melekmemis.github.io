@@ -360,6 +360,8 @@ h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.01em; }
 .social-icon.yt { background: rgba(255,0,0,0.1); }
 .social-icon.li { background: rgba(0,119,181,0.15); }
 .social-icon.mail { background: rgba(0,255,136,0.08); }
+.social-icon.ig { background: rgba(225,48,108,0.1); }
+
 .social-info { flex: 1; }
 .social-name { font-size: 13px; font-weight: 600; color: var(--text); display: block; }
 .social-handle { font-family: var(--mono); font-size: 11px; color: var(--text3); }
