@@ -28,24 +28,24 @@ window.projectData = [
     "status": "Tamamlandı",
     "statusClass": "status-done",
     "icon": "🚀",
-    "description": "Teknofest Roket Yarışması için STM32F407 tabanlı, FreeRTOS çalışan gerçek zamanlı bir uçuş kontrol yazılımı geliştirdim. Sistem; IMU, barometre ve GPS verilerini aynı anda işleyerek uçuş fazlarını takip ediyor, uygun anda drogue ve ana paraşütü tetikliyor. Sensör verileri LoRa üzerinden yer istasyonuna aktarılıyor ve aynı zamanda SD karta kaydediliyor.",
+    "description": "STM32F407 tabanlı, FreeRTOS çalışan gerçek zamanlı bir uçuş kontrol yazılımı geliştirdim. Sistem; IMU, barometre ve GPS verilerini aynı anda işleyerek uçuş fazlarını takip ediyor, uygun anda drogue ve ana paraşütü tetikliyor. Sensör verileri LoRa üzerinden yer istasyonuna aktarılıyor ve aynı zamanda SD karta kaydediliyor.",
     "tags": ["STM32F407", "FreeRTOS", "BNO055", "MS5611", "NMEA", "LoRa", "DMA", "Kalman", "C"],
     "links": [
       { "label": "GitHub", "url": "https://github.com/melekmemis/UKBAlgFreeRTOS" }
     ],
     "process": [
       {
-        "text": "Projede temel hedefim tek çekirdekli STM32 üzerinde birden fazla sensörü aynı anda stabil şekilde çalıştırabilmekti. Bunun için FreeRTOS kullanarak IMU, barometre, GPS, LoRa haberleşmesi, yer istasyonu iletişimi, SD kart kayıt sistemi ve uçuş durum kontrolü için ayrı task yapıları oluşturdum. Böylece sistem bloklanmadan gerçek zamanlı çalışabiliyor."
+        "text": "Temel hedefim tek çekirdekli STM32 üzerinde birden fazla sensörü aynı anda stabil şekilde çalıştırabilmekti. Bunun için FreeRTOS kullanarak IMU, barometre, GPS, LoRa haberleşmesi, yer istasyonu iletişimi, SD kart kayıt sistemi ve uçuş durum kontrolü için ayrı task yapıları oluşturdum. Böylece sistem bloklanmadan gerçek zamanlı çalışabiliyor."
       },
       {
-        "text": "GPS verisini klasik polling yöntemi yerine DMA + UART Idle Line Detection ile aldım. HAL_UARTEx_ReceiveToIdle_DMA kullanarak veri geldiğinde interrupt üzerinden ilgili taskı uyandırıyorum. Bu yapı CPU yükünü ciddi şekilde azalttı ve veri kaybını önledi. Gelen NMEA verilerinden enlem, boylam, irtifa ve uydu bilgilerini ayrıştırdım.",
+        "text": "GPS verisini klasik polling yöntemi yerine DMA + UART Idle Line Detection ile aldım. Idle DMA kullanarak veri geldiğinde interrupt üzerinden ilgili taskı uyandırıyorum. Bu yapı CPU yükünü ciddi şekilde azalttı ve veri kaybını önledi. Gelen NMEA verilerinden enlem, boylam, irtifa ve uydu bilgilerini ayrıştırdım.",
         "video": "rocketP/dma_i2c_demo.mp4"
       },
       {
         "text": "Sensör verilerindeki gürültüyü azaltmak için ivme, gyro, açı, basınç ve irtifa dahil tüm verileri ayrı ayrı Kalman filtresinden geçirdim. Her sensör için farklı Q ve R parametreleri ayarlayarak sistemin hem daha stabil hem de daha hızlı tepki vermesini hedefledim. Özellikle yanlış paraşüt tetiklemelerini önlemek bu noktada önemliydi."
       },
       {
-        "text": "Uçuş algoritması tarafında bir durum makinesi yapısı kullandım. Liftoff, burnout, apogee tespiti, drogue ve ana paraşüt tetikleme gibi tüm uçuş fazları belirli koşullarla kontrol ediliyor. Her durum bir status byte içinde bitfield olarak tutuluyor ve yer istasyonuna gönderiliyor. Böylece uçuş sırasında hangi aşamada olunduğu anlık takip edilebiliyor.",
+        "text": "Uçuş algoritması tarafında bir state machine yapısı kullandım. Liftoff, burnout, apogee tespiti, drogue ve ana paraşüt tetikleme gibi tüm uçuş fazları belirli koşullarla kontrol ediliyor. Her durum bir status byte içinde bitfield olarak tutuluyor ve yer istasyonuna gönderiliyor. Böylece uçuş sırasında hangi aşamada olunduğu anlık takip edilebiliyor.",
         "video": "rocketP/comm_test.mp4"
       },
       {
@@ -53,7 +53,7 @@ window.projectData = [
         "video": "rocketP/ground_station.mp4"
       },
       {
-        "text": "Uçuş boyunca tüm veriler FATFS kullanılarak SD karta kaydediliyor. İniş tamamlandıktan sonra sistem dosyayı güvenli şekilde kapatıyor. Böylece ani güç kesilmelerinde veri kaybı yaşanmaması hedeflendi."
+        "text": "Uçuş boyunca tüm veriler FATFS kullanılarak SD karta kaydediliyor. İniş tamamlandıktan sonra sistem dosyayı güvenli şekilde kapatıyor. Böylece ani güç kesilmelerinde veri kaybı yaşanmasının önüne geçilebiliyor."
       }
     ],
     "images": [
@@ -61,5 +61,32 @@ window.projectData = [
       { "url": "rocketP/comm_test.mp4" },
       { "url": "rocketP/ground_station.mp4" }
     ]
-  }
+  },
+  {
+    "id": "real-time-autopilot",
+    "title": "C Tabanlı Gerçek Zamanlı Otopilot",
+    "status": "Aktif Geliştirme",
+    "statusClass": "status-active",
+    "icon": "🛸",
+    "description": "ArduPilot veya PX4'e bağımlı kalmadan, kaynakları kısıtlı donanımlar için sıfırdan C ile yazılan bağımsız bir otopilot yazılımı hazırlıyorum. Companion computer ile MAVLink üzerinden haberleşebilen, modüler ve taşınabilir bir mimari hedefliyorum.",
+    "tags": ["C", "MAVLink", "FreeRTOS", "PID", "EKF"],
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/melekmemis/droneP" }
+    ],
+    "process": [
+      {
+        "text": "ArduPilot ve PX4 kısıtlı donanımlar için fazla ağır, Betaflight ise FPV odaklı, ikisi de hedeflediğim senaryoya uymuyordu. Minimal, MAVLink konuşan, kendi FCU kartımda çalışabilecek ve companion computer'dan görev alabilen bir sistem yazmak istedim. MAVLink'in resmi C kütüphanesini entegre ederek telemetry, systemState, comm ve kontrol modüllerini birbirinden bağımsız tasarladım.",
+        "video": "droneP/mavlink_test.mp4"
+      },
+      {
+        "text": "Şu an PID kontrol döngüsünü test etmek için fiziksel bir deneme düzeneği kurdum, tahterevalli üzerinde iki motorun PWM'ini kontrol ederek sistemi dengede tutmaya çalışıyorum."
+      },
+      {
+        "text": "Sonraki adım sensör füzyonu ve EKF tabanlı durum kestirimi. Ardından companion computer entegrasyonu ve görev yönetimi gelecek."
+      }
+    ],
+    "images": [
+      { "url": "droneP/mavlink_test.mp4" }
+    ]
+  },
 ];
