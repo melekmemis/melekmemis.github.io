@@ -22,4 +22,44 @@ window.projectData = [
       { "url": "fcuPdbP/ATkdFCUstack.mp4", "poster": "fcuPdbP/videoCover/assem.png" }
     ]
   },
+  {
+    "id": "stm32-flight-control",
+    "title": "STM32 Tabanlı Uçuş Kontrol Algoritması",
+    "status": "Tamamlandı",
+    "statusClass": "status-done",
+    "icon": "🚀",
+    "description": "Teknofest Roket Yarışması için STM32F407 tabanlı, FreeRTOS çalışan gerçek zamanlı bir uçuş kontrol yazılımı geliştirdim. Sistem; IMU, barometre ve GPS verilerini aynı anda işleyerek uçuş fazlarını takip ediyor, uygun anda drogue ve ana paraşütü tetikliyor. Sensör verileri LoRa üzerinden yer istasyonuna aktarılıyor ve aynı zamanda SD karta kaydediliyor.",
+    "tags": ["STM32F407", "FreeRTOS", "BNO055", "MS5611", "NMEA", "LoRa", "DMA", "Kalman", "C"],
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/melekmemis/UKBAlgFreeRTOS" }
+    ],
+    "process": [
+      {
+        "text": "Projede temel hedefim tek çekirdekli STM32 üzerinde birden fazla sensörü aynı anda stabil şekilde çalıştırabilmekti. Bunun için FreeRTOS kullanarak IMU, barometre, GPS, LoRa haberleşmesi, yer istasyonu iletişimi, SD kart kayıt sistemi ve uçuş durum kontrolü için ayrı task yapıları oluşturdum. Böylece sistem bloklanmadan gerçek zamanlı çalışabiliyor."
+      },
+      {
+        "text": "GPS verisini klasik polling yöntemi yerine DMA + UART Idle Line Detection ile aldım. HAL_UARTEx_ReceiveToIdle_DMA kullanarak veri geldiğinde interrupt üzerinden ilgili taskı uyandırıyorum. Bu yapı CPU yükünü ciddi şekilde azalttı ve veri kaybını önledi. Gelen NMEA verilerinden enlem, boylam, irtifa ve uydu bilgilerini ayrıştırdım.",
+        "video": "rocketP/dma_i2c_demo.mp4"
+      },
+      {
+        "text": "Sensör verilerindeki gürültüyü azaltmak için ivme, gyro, açı, basınç ve irtifa dahil tüm verileri ayrı ayrı Kalman filtresinden geçirdim. Her sensör için farklı Q ve R parametreleri ayarlayarak sistemin hem daha stabil hem de daha hızlı tepki vermesini hedefledim. Özellikle yanlış paraşüt tetiklemelerini önlemek bu noktada önemliydi."
+      },
+      {
+        "text": "Uçuş algoritması tarafında bir durum makinesi yapısı kullandım. Liftoff, burnout, apogee tespiti, drogue ve ana paraşüt tetikleme gibi tüm uçuş fazları belirli koşullarla kontrol ediliyor. Her durum bir status byte içinde bitfield olarak tutuluyor ve yer istasyonuna gönderiliyor. Böylece uçuş sırasında hangi aşamada olunduğu anlık takip edilebiliyor.",
+        "video": "rocketP/comm_test.mp4"
+      },
+      {
+        "text": "Yer istasyonu haberleşmesi için kendi binary veri protokolümü tasarladım. Sensör verileri belirli byte paketleri halinde LoRa üzerinden gönderiliyor. Yer istasyonu tarafında ise C# Windows Forms ile geliştirdiğim arayüz gelen verileri ayrıştırıp gerçek zamanlı grafik olarak gösteriyor.",
+        "video": "rocketP/ground_station.mp4"
+      },
+      {
+        "text": "Uçuş boyunca tüm veriler FATFS kullanılarak SD karta kaydediliyor. İniş tamamlandıktan sonra sistem dosyayı güvenli şekilde kapatıyor. Böylece ani güç kesilmelerinde veri kaybı yaşanmaması hedeflendi."
+      }
+    ],
+    "images": [
+      { "url": "rocketP/dma_i2c_demo.mp4" },
+      { "url": "rocketP/comm_test.mp4" },
+      { "url": "rocketP/ground_station.mp4" }
+    ]
+  }
 ];
