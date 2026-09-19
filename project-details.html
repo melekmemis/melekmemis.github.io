@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proje Detayları — Melek Memiş</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="project-detail-page">
+
+  <nav>
+    <span class="nav-logo">Projeler</span>
+    <ul class="nav-links">
+      <li><a href="index.html#projects">ana sayfaya dön</a></li>
+    </ul>
+  </nav>
+
+  <main class="container detail-hero">
+    <a href="index.html#projects" class="back-link">← Projelere Dön</a>
+    
+    <div id="project-content">
+      <!-- Content will be loaded via JS -->
+      <div class="loading">Yükleniyor...</div>
+    </div>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="imageModal" class="modal">
+    <span class="modal-close" onclick="closeLightbox()">&times;</span>
+    <button class="modal-nav modal-prev" onclick="prevImage(event)">&#10094;</button>
+    
+    <div class="modal-content-wrapper">
+      <img class="modal-content" id="modalImg" style="display: none;">
+      <div class="modal-video" id="modalVidContainer" style="display: none;"></div>
+    </div>
+
+    <button class="modal-nav modal-next" onclick="nextImage(event)">&#10095;</button>
+  </div>
+
+  <footer>
+    <span class="footer-copy">© 2025 Melek Memiş</span>
+    <span class="footer-built">built with <span>♥</span> — project architecture</span>
+  </footer>
+
+  <script src="projects-data.js"></script>
+  <script src="script.js"></script>
+  <script>
+    function getYouTubeId(url) {
+      let vidId = '';
+      if (url.includes('v=')) vidId = url.split('v=')[1].split('&')[0];
+      else if (url.includes('youtu.be/')) vidId = url.split('youtu.be/')[1].split('?')[0];
+      else if (url.includes('shorts/')) vidId = url.split('shorts/')[1].split('?')[0];
+      else if (url.includes('embed/')) vidId = url.split('embed/')[1].split('?')[0];
+      return vidId;
+    }
+
+    function loadProject() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const projectId = urlParams.get('project');
+      const contentDiv = document.getElementById('project-content');
+
+      if (!projectId) {
+        contentDiv.innerHTML = '<h2>Proje bulunamadı.</h2><a href="index.html">Ana sayfaya dön</a>';
+        return;
+      }
+
+      try {
+        const projects = window.projectData;
+        if (!projects) {
+          contentDiv.innerHTML = '<h2>Veri yüklenemedi.</h2>';
+          return;
+        }
+
+        const project = projects.find(p => p.id === projectId);
+        if (!project) {
+          contentDiv.innerHTML = '<h2>Proje bulunamadı.</h2><a href="index.html">Ana sayfaya dön</a>';
+          return;
+        }
+
+        document.title = `${project.title} — Melek Memiş`;
+
+        let linksHtml = '';
+        if (project.links && project.links.length > 0) {
+          linksHtml = `
+            <div class="sidebar-box">
+              <h4>Bağlantılar</h4>
+              <div class="project-links">
+                ${project.links.map(l => `
+                  <a href="${l.url}" class="btn btn-outline" target="_blank" style="width: 100%; justify-content: center; margin-bottom: 0.5rem;">${l.label}</a>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        let processHtml = '';
+        if (project.process && project.process.length > 0) {
+          processHtml = `
+            <div class="detail-section fade-in">
+              <h3>Süreç</h3>
+              <ul class="process-list">
+                ${project.process.map(step => {
+                  const stepText = typeof step === 'string' ? step : step.text;
+                  
+                  // Handle multiple images or single image
+                  const stepImages = [];
+                  if (typeof step === 'object') {
+                    if (step.image) stepImages.push(step.image);
+                    if (step.images && Array.isArray(step.images)) {
+                      stepImages.push(...step.images);
+                    }
+                  }
+
+                  const imagesHtml = stepImages.length > 0 ? `
+                    <div class="step-images-container ${stepImages.length >= 3 ? 'is-stack' : ''}">
+                      ${stepImages.map(img => `
+                        <div class="step-image" onclick="handleImageClick(event, '${img}', ${JSON.stringify(stepImages).replace(/"/g, "'")})">
+                          <img src="${img}" alt="Süreç görseli" onerror="this.style.display='none'">
+                        </div>
+                      `).join('')}
+                    </div>
+                  ` : '';
+
+                  let stepVid = '';
+                  if (typeof step === 'object' && step.video) {
+                    const vidUrl = step.video;
+                    const isYoutube = vidUrl.includes('youtube.com') || vidUrl.includes('youtu.be');
+                    const youtubeId = isYoutube ? getYouTubeId(vidUrl) : '';
+                    
+                    stepVid = `
+                      <div class="step-video" onclick="openLightbox('${vidUrl}', '${isYoutube ? 'youtube' : 'video'}')">
+                        ${isYoutube ? 
+                          `<div class="video-thumbnail">
+                             <img src="https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg" alt="Video kapak">
+                             <div class="play-icon">▶</div>
+                           </div>` :
+                          `<video ${step.poster ? `poster="${step.poster}"` : ''}><source src="${vidUrl}" type="video/mp4"></video>`
+                        }
+                      </div>
+                    `;
+                  }
+
+                  return `
+                    <li class="process-step">
+                      <div class="step-content">${stepText}</div>
+                      ${imagesHtml}
+                      ${stepVid}
+                    </li>
+                  `;
+                }).join('')}
+              </ul>
+            </div>
+          `;
+        }
+
+        let galleryHtml = '';
+        if (project.images && project.images.length > 0) {
+          galleryHtml = `
+            <div class="detail-section fade-in">
+              <h3>Fotoğraf & Videolar</h3>
+              <div class="gallery-grid">
+                ${project.images.map(item => {
+                  const isObj = typeof item === 'object';
+                  const url = isObj ? item.url : item;
+                  const poster = isObj ? item.poster : '';
+                  const isVideo = url.toLowerCase().endsWith('.mp4');
+                  return `
+                    <div class="gallery-item" onclick="openLightbox('${url}', '${isVideo ? 'video' : 'image'}')" style="cursor: zoom-in;">
+                      ${isVideo ? 
+                        `<div class="video-preview-wrapper" style="width: 100%; height: 100%; position: relative;">
+                           <video ${poster ? `poster="${poster}"` : ''} style="width: 100%; height: 100%; object-fit: cover;">
+                             <source src="${url}" type="video/mp4">
+                           </video>
+                           <div class="play-icon">▶</div>
+                         </div>` :
+                        `<img src="${url}" alt="${project.title}" onerror="this.src='https://via.placeholder.com/800x450?text=Görsel+Bulunamadı'">`
+                      }
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        contentDiv.innerHTML = `
+          <div class="project-header fade-in">
+            <span class="project-status ${project.statusClass}">${project.status}</span>
+            <h1>${project.title}</h1>
+            <p class="hero-sub">${project.description}</p>
+          </div>
+
+          <div class="detail-grid">
+            <div class="detail-main">
+              ${processHtml}
+              ${galleryHtml}
+            </div>
+            
+            <aside class="project-sidebar fade-in">
+              <div class="sidebar-box">
+                <h4>Teknolojiler</h4>
+                <div class="project-tags">
+                  ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+              </div>
+              ${linksHtml}
+            </aside>
+          </div>
+        `;
+
+        if (window.observer) {
+          document.querySelectorAll('.fade-in').forEach(el => window.observer.observe(el));
+        }
+
+        // Auto-detect square images and adjust box ratio
+        document.querySelectorAll('.step-image img').forEach(img => {
+          const checkRatio = () => {
+            const ratio = img.naturalWidth / img.naturalHeight;
+            if (ratio > 0.8 && ratio < 1.2) {
+              img.parentElement.classList.add('is-square');
+            }
+          };
+          if (img.complete) checkRatio();
+          else img.onload = checkRatio;
+        });
+
+      } catch (error) {
+        console.error('Error loading project:', error);
+        contentDiv.innerHTML = `<h2>Bir hata oluştu.</h2><p style="color: var(--text3); font-family: var(--mono); font-size: 12px;">${error.message}</p>`;
+      }
+    }
+
+    let currentGallery = [];
+    let currentGalleryIndex = 0;
+
+    function openLightbox(src, type = 'image', gallery = []) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalVid = document.getElementById('modalVidContainer');
+      
+      currentGallery = gallery.length > 0 ? gallery : [src];
+      currentGalleryIndex = currentGallery.indexOf(src);
+      if (currentGalleryIndex === -1) currentGalleryIndex = 0;
+
+      modalImg.style.display = 'none';
+      modalVid.style.display = 'none';
+      modalVid.innerHTML = '';
+
+      if (type === 'youtube') {
+        modalVid.style.display = 'block';
+        const vidId = getYouTubeId(src);
+        modalVid.innerHTML = `<iframe src="https://www.youtube.com/embed/${vidId}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+      } else if (type === 'video') {
+        modalVid.style.display = 'block';
+        modalVid.innerHTML = `<video controls autoplay playsinline><source src="${src}" type="video/mp4"></video>`;
+      } else {
+        modalImg.style.display = 'block';
+        modalImg.src = src;
+      }
+      
+      updateLightboxButtons();
+      modal.classList.add('active');
+
+      // Close on background click
+      modal.onclick = function(e) {
+        if (e.target === modal || e.target.classList.contains('modal-content-wrapper')) {
+          closeLightbox();
+        }
+      };
+    }
+
+    function updateLightboxButtons() {
+      const prevBtn = document.querySelector('.modal-prev');
+      const nextBtn = document.querySelector('.modal-next');
+      
+      if (currentGallery.length > 1) {
+        prevBtn.style.display = 'block';
+        nextBtn.style.display = 'block';
+      } else {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+      }
+    }
+
+    function prevImage(e) {
+      e.stopPropagation();
+      currentGalleryIndex = (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
+      document.getElementById('modalImg').src = currentGallery[currentGalleryIndex];
+    }
+
+    function nextImage(e) {
+      e.stopPropagation();
+      currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
+      document.getElementById('modalImg').src = currentGallery[currentGalleryIndex];
+    }
+
+    function handleImageClick(e, src, gallery = []) {
+      // User requested direct open
+      openLightbox(src, 'image', gallery);
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('imageModal');
+      const modalVid = document.getElementById('modalVidContainer');
+      modal.classList.remove('active');
+      modalVid.innerHTML = '';
+    }
+
+    window.onload = loadProject;
+  </script>
+</body>
+</html>
