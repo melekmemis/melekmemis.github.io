@@ -30,7 +30,7 @@
         <div>
           <div class="hero-tag">Embedded Systems & Robotıcs Engıneer</div>
           <div class="btn-row">
-            <img src="profile.png" width="95" height="125" class="hero-img-radius" ;>
+            <img src="profile.png" width="95" height="125" class="hero-img-radius">
             <h1>Melek<br><span>Memiş</span></h1>
           </div>
           <p class="hero-sub">
@@ -245,35 +245,11 @@
           </div>
 
           <!-- PROJECT 4 -->
-          <div class="project-card" onclick="location.href='project-details.html?project=cubesat-software'"
-            style="cursor: pointer;">
-            <div class="project-meta">
-              <span class="project-icon"></span>
-              <span class="project-status status-done">Tamamlandı</span>
-            </div>
-
-            <div class="project-title">CubeSat Yazılım Geliştirme</div>
-
-            <p class="project-desc">
-              4 kartlı dağıtık bir CubeSat mimarisi geliştirdim: kartlar arası haberleşme CAN bus, yer
-              istasyonuna veri aktarımı LoRa ile sağlanıyor. Sensör verileri (IMU, barometre, GPS) Kalman
-              filtresiyle işleniyor, güç tüketimi INA219 ile izlenip SD karta kaydediliyor.
-            </p>
-
-            <div class="project-tags">
-              <span class="tag">CubeSat</span>
-              <span class="tag">ADCS</span>
-              <span class="tag">CAN</span>
-              <span class="tag">STM32</span>
-            </div>
-          </div>
-
-          <!-- PROJECT 5 -->
           <div class="project-card" onclick="location.href='project-details.html?project=autonomous-rover'"
             style="cursor: pointer;">
             <div class="project-meta">
               <span class="project-icon"></span>
-              <span class="project-status status-active">Aktif</span>
+              <span class="project-status status-active">Aktif Geliştirme</span>
             </div>
 
             <div class="project-title"> Tübitak 2209-A Destekli Otonom Rover</div>
@@ -289,6 +265,27 @@
               <span class="tag">Lidar</span>
               <span class="tag">Grid Mapping</span>
               <span class="tag">Ters Kinematik</span>
+              <span class="tag">STM32</span>
+            </div>
+          </div>
+
+          <!-- PROJECT 5 -->
+          <div class="project-card" onclick="location.href='project-details.html?project=cubesat-software'"
+            style="cursor: pointer;">
+            <div class="project-meta">
+              <span class="project-icon"></span>
+              <span class="project-status status-done">Tamamlandı</span>
+            </div>
+
+            <div class="project-title">CubeSat Yazılım Geliştirme</div>
+
+            <p class="project-desc">
+              4 kartlı, dağıtık bir CubeSat yazılımı geliştirdim: yer istasyonu, haberleşme, sensör ve merkezi işlem katmanları. Kartlar arası veri alışverişi CAN bus üzerinden, yer istasyonuna telemetri aktarımı ise LoRa downlink ile sağlanıyor. Sensör kartı IMU, barometre ve GPS verilerini işlerken; merkezi kart INA219 ile güç tüketimini izliyor ve tüm veriyi SD karta kaydediyor.
+            </p>
+
+            <div class="project-tags">
+              <span class="tag">CubeSat</span>
+              <span class="tag">CAN</span>
               <span class="tag">STM32</span>
             </div>
           </div>
@@ -340,6 +337,12 @@
             <div class="cv-place">TÜBİTAK</div>
             <div class="cv-detail">Geliştirdiğim lidar tabanlı otonom rover için destek almaya hak kazandım.</div>
           </div>
+          <div class="cv-item">
+            <div class="cv-date">2024-2025</div>
+            <div class="cv-role">Teknofest Roket Yarışması</div>
+            <div class="cv-place">Teknofest</div>
+            <div class="cv-detail">Yüksek irtifa kategorisinde 8. (2025) ve Orta İrtifa kategorisinde 10. (2024).</div>
+          </div>
         </div>
         <div class="cv-col">
           <h3>// Eğitim</h3>
@@ -349,11 +352,6 @@
             <div class="cv-place">Düzce Üniversitesi</div>
           </div>
           <h3 style="margin-top:2rem;">// Sertifikalar</h3>
-          <div class="cv-item">
-            <div class="cv-date">2025</div>
-            <div class="cv-role">Teknofest Roket Yarışması</div>
-            <div class="cv-place">Teknofest</div>
-          </div>
           <div class="cv-item">
             <div class="cv-date">2026</div>
             <div class="cv-role">STM32F4 Discovery Kartı İle Sıfırdan İleri Seviyeye Arm Programlama Dersleri</div>

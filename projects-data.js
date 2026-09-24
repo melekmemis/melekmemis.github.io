@@ -35,31 +35,30 @@ window.projectData = [
     ],
     "process": [
       {
-        "text": "Temel hedefim tek çekirdekli STM32 üzerinde birden fazla sensörü aynı anda stabil şekilde çalıştırabilmekti. Bunun için FreeRTOS kullanarak IMU, barometre, GPS, LoRa haberleşmesi, yer istasyonu iletişimi, SD kart kayıt sistemi ve uçuş durum kontrolü için ayrı task yapıları oluşturdum. Böylece sistem bloklanmadan gerçek zamanlı çalışabiliyor."
+        "text": "Temel hedefim tek çekirdekli STM32 üzerinde birden fazla sensörü aynı anda stabil şekilde çalıştırabilmekti. Bunun için FreeRTOS kullanarak IMU, barometre, GPS, LoRa haberleşmesi, yer istasyonu iletişimi, SD kart kayıt sistemi ve uçuş durum kontrolü için ayrı task yapıları oluşturdum. Böylece sistem bloklanmadan gerçek zamanlı çalışabiliyor.",
+        "video": "ukb/1.mp4"
       },
       {
-        "text": "GPS verisini klasik polling yöntemi yerine DMA + UART Idle Line Detection ile aldım. Idle DMA kullanarak veri geldiğinde interrupt üzerinden ilgili taskı uyandırıyorum. Bu yapı CPU yükünü ciddi şekilde azalttı ve veri kaybını önledi. Gelen NMEA verilerinden enlem, boylam, irtifa ve uydu bilgilerini ayrıştırdım.",
-        "video": "rocketP/dma_i2c_demo.mp4"
+        "text": "GPS verisini klasik polling yöntemi yerine DMA + UART Idle Line Detection ile aldım. Idle DMA kullanarak veri geldiğinde interrupt üzerinden ilgili taskı uyandırıyorum. Bu yapı CPU yükünü ciddi şekilde azalttı ve veri kaybını önledi. Gelen NMEA verilerinden enlem, boylam, irtifa ve uydu bilgilerini ayrıştırdım."
       },
       {
         "text": "Sensör verilerindeki gürültüyü azaltmak için ivme, gyro, açı, basınç ve irtifa dahil tüm verileri ayrı ayrı Kalman filtresinden geçirdim. Her sensör için farklı Q ve R parametreleri ayarlayarak sistemin hem daha stabil hem de daha hızlı tepki vermesini hedefledim. Özellikle yanlış paraşüt tetiklemelerini önlemek bu noktada önemliydi."
       },
       {
-        "text": "Uçuş algoritması tarafında bir state machine yapısı kullandım. Liftoff, burnout, apogee tespiti, drogue ve ana paraşüt tetikleme gibi tüm uçuş fazları belirli koşullarla kontrol ediliyor. Her durum bir status byte içinde bitfield olarak tutuluyor ve yer istasyonuna gönderiliyor. Böylece uçuş sırasında hangi aşamada olunduğu anlık takip edilebiliyor.",
-        "video": "rocketP/comm_test.mp4"
+        "text": "Uçuş algoritması tarafında bir state machine yapısı kullandım. Liftoff, burnout, apogee tespiti, drogue ve ana paraşüt tetikleme gibi tüm uçuş fazları belirli koşullarla kontrol ediliyor. Her durum bir status byte içinde bitfield olarak tutuluyor ve yer istasyonuna gönderiliyor. Böylece uçuş sırasında hangi aşamada olunduğu anlık takip edilebiliyor."
       },
       {
         "text": "Yer istasyonu haberleşmesi için kendi binary veri protokolümü tasarladım. Sensör verileri belirli byte paketleri halinde LoRa üzerinden gönderiliyor. Yer istasyonu tarafında ise C# Windows Forms ile geliştirdiğim arayüz gelen verileri ayrıştırıp gerçek zamanlı grafik olarak gösteriyor.",
-        "video": "rocketP/ground_station.mp4"
+        "video": "ukb/3.mp4"
       },
       {
         "text": "Uçuş boyunca tüm veriler FATFS kullanılarak SD karta kaydediliyor. İniş tamamlandıktan sonra sistem dosyayı güvenli şekilde kapatıyor. Böylece ani güç kesilmelerinde veri kaybı yaşanmasının önüne geçilebiliyor."
       }
     ],
     "images": [
-      { "url": "rocketP/dma_i2c_demo.mp4" },
-      { "url": "rocketP/comm_test.mp4" },
-      { "url": "rocketP/ground_station.mp4" }
+      { "url": "ukb/3.mp4" },
+      { "url": "ukb/4.mp4" },
+      { "url": "ukb/1.jpeg" }
     ]
   },
   {
@@ -71,19 +70,43 @@ window.projectData = [
     "description": "ArduPilot veya PX4'e bağımlı kalmadan, kaynakları kısıtlı donanımlar için sıfırdan C ile yazılan bağımsız bir otopilot yazılımı hazırlıyorum. Companion computer ile MAVLink üzerinden haberleşebilen, modüler ve taşınabilir bir mimari hedefliyorum.",
     "tags": ["C", "MAVLink", "FreeRTOS", "PID", "EKF"],
     "links": [
-      { "label": "GitHub", "url": "https://github.com/melekmemis/droneP" }
+      { "label": "GitHub", "url": "https://github.com/melekmemis/droneP" },
+      { "label": "Montaj Videosu", "url": "https://www.instagram.com/reel/DdrUi6ZtmRO/" }
     ],
     "process": [
       {
-        "text": "ArduPilot ve PX4 kısıtlı donanımlar için fazla ağır, Betaflight ise FPV odaklı, ikisi de hedeflediğim senaryoya uymuyordu. Minimal, MAVLink konuşan, kendi FCU kartımda çalışabilecek ve companion computer'dan görev alabilen bir sistem yazmak istedim. MAVLink'in resmi C kütüphanesini entegre ederek telemetry, systemState, comm ve kontrol modüllerini birbirinden bağımsız tasarladım.",
-        "video": "droneP/mavlink_test.mp4"
+        "text": "ArduPilot ve PX4 kısıtlı donanımlar için fazla ağır, Betaflight ise FPV odaklı, ikisi de hedeflediğim senaryoya uymuyordu. Minimal, MAVLink konuşan, kendi FCU kartımda çalışabilecek ve companion computer'dan görev alabilen bir sistem yazmak istedim. MAVLink'in resmi C kütüphanesini entegre ederek telemetry, systemState, comm ve kontrol modüllerini birbirinden bağımsız tasarladım."
+        //"video": "droneP/mavlink_test.mp4"
       },
       {
-        "text": "Şu an PID kontrol döngüsünü test etmek için fiziksel bir deneme düzeneği kurdum, tahterevalli üzerinde iki motorun PWM'ini kontrol ederek sistemi dengede tutmaya çalışıyorum."
+        "text": "Şu an PID kontrol döngüsünü test etmek için fiziksel bir deneme düzeneği kurdum, tahterevalli üzerinde iki motorun PWM'ini kontrol ederek sistemi dengede tutmaya çalışıyorum.",
+        "image": "droneP/1.jpeg"
       }
     ],
-    "images": [
-      { "url": "droneP/mavlink_test.mp4" }
+    //"images": [
+    //  { 
+        //"url": "droneP/mavlink_test.mp4" 
+    //  }
+    //]
+  },
+  {
+    "id": "autonomous-rover",
+    "title": "Tübitak 2209-A Destekli Otonom Rover",
+    "status": "Aktif Geliştirme",
+    "statusClass": "status-active",
+    "icon": "🛰️",
+    "description": "LiDAR tabanlı haritalandırma, yön tayini ve robotik kol ile numune toplama görevlerini gerçekleştirebilen modüler bir keşif platformudur. STM32 tabanlı gömülü sistem altyapısı kullanan rover, sensör verilerini gerçek zamanlı işleyerek otonom hareket, engel algılama ve çevresel veri toplama yeteneklerine sahip bir sistem geliştirmekteyim.",
+    "tags": ["STM32", "Rover", "Lidar", "Grid Mapping", "İleri Kinematik"],
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/melekmemis/roboticArm" }
+    ],
+    "process": [
+      { "text": "Bu projeye, otonom hareket edebilen ve çevresini algılayarak görev gerçekleştirebilen bir rover geliştirme amacıyla başladım. Rover üzerinde LiDAR kullanarak 2D grid mapping çalışmaları yaparken, görevleri gerçekleştirmek için kendi robotik kolumu da tasarlayıp geliştirdim. İlk versiyonda kolu ileri kinematik ile kontrol ettim.",
+        "images": ["rover/1.jpeg", "rover/2.jpeg", "rover/3.jpeg"] 
+      },
+      { "text": "Şimdi ise bu çalışmayı bir adım ileri taşıyarak robot kolunu yeni bir platform üzerinde yeniden geliştiriyorum. Mevcut prototip uzaktan kumandalı olarak çalışıyor ve bir sonraki aşamada ters kinematik tabanlı kontrol sistemine geçmeyi hedefliyorum.",
+        "image": "rover/4.jpeg"
+      },
     ]
   },
   {
@@ -92,8 +115,8 @@ window.projectData = [
     "status": "Tamamlandı",
     "statusClass": "status-done",
     "icon": "🛰️",
-    "description": "4 kartlı, dağıtık bir CubeSat gömülü mimarisi geliştirdim: yer istasyonu, haberleşme, sensör ve merkezi işlem (OBC) kartları. Kartlar arası veri alışverişi CAN bus üzerinden, yer istasyonuna telemetri aktarımı ise LoRa downlink ile sağlanıyor. Sensör kartı IMU, barometre ve GPS verilerini Kalman filtresiyle işlerken; merkezi kart INA219 ile güç tüketimini izliyor ve tüm veriyi SD karta kaydediyor.",
-    "tags": ["STM32", "CAN Bus", "LoRa", "Kalman Filtresi", "INA219", "GPS"],
+    "description": "4 kartlı, dağıtık bir CubeSat yazılımı geliştirdim: yer istasyonu, haberleşme, sensör ve merkezi işlem katmanları. Kartlar arası veri alışverişi CAN bus üzerinden, yer istasyonuna telemetri aktarımı ise LoRa downlink ile sağlanıyor. Sensör kartı IMU, barometre ve GPS verilerini işlerken; merkezi kart INA219 ile güç tüketimini izliyor ve tüm veriyi SD karta kaydediyor.",
+    "tags": ["STM32", "CAN Bus", "LoRa", "INA219", "GPS"],
     "links": [
       { "label": "GitHub", "url": "https://github.com/melekmemis/cubeSat" }
     ],
