@@ -4,9 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Proje Detayları — Melek Memiş</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KY1DQE10EV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-KY1DQE10EV');
+  </script>
 </head>
 <body class="project-detail-page">
 
@@ -78,6 +90,11 @@
           contentDiv.innerHTML = '<h2>Proje bulunamadı.</h2><a href="index.html">Ana sayfaya dön</a>';
           return;
         }
+
+        gtag('event', 'project_view', {
+          project_id: project.id,
+          project_name: project.title
+        });
 
         document.title = `${project.title} — Melek Memiş`;
 
