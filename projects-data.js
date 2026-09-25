@@ -56,7 +56,7 @@ window.projectData = [
       }
     ],
     "images": [
-      { "url": "ukb/3.mp4" },
+      { "url": "ukb/2.mp4" },
       { "url": "ukb/4.mp4" },
       { "url": "ukb/1.jpeg" }
     ]
